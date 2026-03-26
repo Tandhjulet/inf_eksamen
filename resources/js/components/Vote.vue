@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
 import { LockOpenIcon } from 'lucide-vue-next';
 import { dashboard, login } from '@/routes';
 </script>

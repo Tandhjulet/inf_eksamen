@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { LockOpenIcon } from 'lucide-vue-next';
+import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import FAQCardVue from '@/components/FAQCard.vue';
 import Vote from '@/components/Vote.vue';
 import { dashboard, home } from '@/routes';
@@ -48,9 +49,7 @@ const cards: IFAQCard[] = [
                 class="flex items-center justify-between gap-4 bg-[#081c55] px-8 py-4"
             >
                 <Link :href="home()">
-                    <span class="league-spartan text-2xl font-bold text-white"
-                        >stem.dk</span
-                    >
+                    <AppLogoIcon class-name="text-white" />
                 </Link>
 
                 <div>
