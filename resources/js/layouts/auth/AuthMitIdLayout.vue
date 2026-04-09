@@ -26,7 +26,7 @@ const info_cards = [
     },
     {
         title: 'Mere information',
-        description: 'bla bla',
+        description: 'bla ',
     },
 ];
 </script>

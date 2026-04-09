@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Form, Head } from '@inertiajs/vue3';
+import { ArrowRightIcon } from 'lucide-vue-next';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
@@ -8,10 +9,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthBase from '@/layouts/AuthLayout.vue';
-import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
-import { ArrowRightIcon } from 'lucide-vue-next';
 
 defineProps<{
     status?: string;
@@ -44,15 +43,15 @@ defineProps<{
                 <div class="grid gap-1">
                     <span class="text-sm font-black">BRUGER ID</span>
                     <input
-                        id="email"
-                        type="email"
-                        name="email"
+                        id="username"
+                        type="username"
+                        name="username"
                         required
                         autofocus
                         :tabindex="1"
                         class="rounded-md border-2 border-gray-300 px-2 py-3 text-sm hover:border-blue-600 focus:border-blue-600 focus:bg-blue-600/5 focus:outline-none"
                     />
-                    <InputError :message="errors.email" />
+                    <InputError :message="errors.username" />
                 </div>
 
                 <div class="grid gap-2">
@@ -73,7 +72,6 @@ defineProps<{
                         required
                         :tabindex="2"
                         autocomplete="current-password"
-                        placeholder="Password"
                         class="rounded-md border-2 border-gray-300 px-2 py-3 text-sm hover:border-blue-600 focus:border-blue-600 focus:bg-blue-600/5 focus:outline-none"
                     />
                     <InputError :message="errors.password" />
