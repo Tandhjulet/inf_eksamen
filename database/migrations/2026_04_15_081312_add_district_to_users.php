@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\District;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,12 +11,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('parties', function (Blueprint $table) {
-            $table->id();
-            $table->tinyText('name');
-            $table->tinyText('icon');
-            $table->tinyText('descriptor');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignIdFor(District::class)->after('name')->constrained();
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('parties');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropConstrainedForeignIdFor(District::class);
+        });
     }
 };

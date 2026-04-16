@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import { Head, usePage } from '@inertiajs/vue3';
+import { XIcon } from 'lucide-vue-next';
+import { ref } from 'vue';
+import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
+import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
-import type { BreadcrumbItem } from '@/types';
+import type { BreadcrumbItem, Candidate, Party } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,6 +14,15 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: dashboard(),
     },
 ];
+
+const user = usePage().props.auth.user;
+
+const choosenCandidate = ref<Candidate>();
+const choosenParty = ref<Party>();
+
+defineProps<{
+    parties: Party[];
+}>();
 </script>
 
 <template>
@@ -20,27 +32,95 @@ const breadcrumbs: BreadcrumbItem[] = [
         <div
             class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
         >
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                <div
-                    class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
-                >
-                    <PlaceholderPattern />
-                </div>
-                <div
-                    class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
-                >
-                    <PlaceholderPattern />
-                </div>
-                <div
-                    class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border"
-                >
-                    <PlaceholderPattern />
-                </div>
+            <div>
+                <h1 class="league-spartan text-4xl font-black text-[#081c55]">
+                    Din stemmeseddel FV{{
+                        new Date().getFullYear().toString().substring(2)
+                    }}
+                </h1>
+                <span class="text-lg font-semibold text-[#304ea7]">
+                    {{ user.district.name }}
+                </span>
             </div>
-            <div
-                class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border"
-            >
-                <PlaceholderPattern />
+
+            <div class="grid max-w-4xl grid-cols-1">
+                <div
+                    v-for="party in parties"
+                    :key="party.id"
+                    class="relative flex flex-row gap-4 p-8"
+                >
+                    <img :src="party.icon" class="size-30" />
+
+                    <div class="w-full">
+                        <div class="flex w-full flex-row items-center gap-2">
+                            <Checkbox
+                                class="relative rounded-[2px] data-[state=checked]:border-red-700"
+                                :model-value="choosenParty?.id == party.id"
+                                @update:model-value="
+                                    (state) => {
+                                        choosenParty = state
+                                            ? party
+                                            : undefined;
+                                        choosenCandidate = undefined;
+                                    }
+                                "
+                            >
+                                <div
+                                    class="absolute top-1/2 left-1/2 -translate-1/2"
+                                >
+                                    <XIcon
+                                        class="scale-150 rotate-12 text-red-500"
+                                    />
+                                </div>
+                            </Checkbox>
+                            <Label class="line-clamp-1 text-2xl font-black">{{
+                                party.name
+                            }}</Label>
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <div class="grid grid-cols-3 gap-4">
+                            <div
+                                v-for="candidate in party.candidates"
+                                :key="candidate.id"
+                                class="flex flex-row items-center gap-2"
+                            >
+                                <Checkbox
+                                    class="relative rounded-[2px] data-[state=checked]:border-red-700"
+                                    :model-value="
+                                        choosenCandidate?.id == candidate.id
+                                    "
+                                    @update:model-value="
+                                        (state) => {
+                                            choosenCandidate = state
+                                                ? candidate
+                                                : undefined;
+                                            choosenParty = undefined;
+                                        }
+                                    "
+                                >
+                                    <div
+                                        class="absolute top-1/2 left-1/2 -translate-1/2"
+                                    >
+                                        <XIcon
+                                            class="scale-150 rotate-12 text-red-500"
+                                        />
+                                    </div>
+                                </Checkbox>
+                                <Label class="line-clamp-1">{{
+                                    candidate.name
+                                }}</Label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute top-0 right-0 w-25 text-center">
+                        <span class="text-7xl text-black opacity-50">
+                            {{ party.descriptor }}
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </AppLayout>
