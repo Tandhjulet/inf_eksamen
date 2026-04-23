@@ -10,10 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('candidates', function (Blueprint $table) {
+        Schema::create('elections', function (Blueprint $table) {
             $table->id();
             $table->tinyText('name');
-            $table->boolean('repr_party')->default(false);
+            $table->boolean('active');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::drop('candidates');
+        Schema::dropIfExists('elections');
     }
 };

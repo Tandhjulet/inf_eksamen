@@ -22,11 +22,20 @@ export interface Candidate {
     id: number;
     name: string;
     party_id: number;
-    district_id: number;
+    district_id: number | undefined;
+    repr_party: boolean;
     created_at: string;
     updated_at: string;
 
     district: District;
+}
+
+export interface Election {
+    id: number;
+    name: string;
+    active: boolean;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface District {

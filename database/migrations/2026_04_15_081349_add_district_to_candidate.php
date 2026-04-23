@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('candidates', function (Blueprint $table) {
-            $table->foreignIdFor(District::class)->after('name')->constrained();
+            $table->foreignIdFor(District::class)->after('name')->nullable()->constrained();
             $table->foreignIdFor(Party::class)->after('name')->constrained();
         });
     }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\District;
+use App\Models\Election;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,6 +16,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
+
+        Election::create([
+            'name' => 'FV26',
+            'active' => true,
+        ]);
 
         $this->call([
             DistrictSeeder::class,

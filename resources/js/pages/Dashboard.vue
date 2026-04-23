@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Head, usePage } from '@inertiajs/vue3';
 import { XIcon } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
-import type { BreadcrumbItem, Candidate, Party } from '@/types';
+import type { BreadcrumbItem, Candidate, Election, Party } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -18,11 +18,23 @@ const breadcrumbs: BreadcrumbItem[] = [
 const user = usePage().props.auth.user;
 
 const choosenCandidate = ref<Candidate>();
-const choosenParty = ref<Party>();
 
-defineProps<{
+const props = defineProps<{
+    election: Election;
     parties: Party[];
 }>();
+
+const partyCandidate = computed(() => {
+    const party = props.parties
+        .flatMap((parties) => parties.candidates)
+        .find(
+            (candidate) =>
+                choosenCandidate.value?.party_id == candidate.party_id &&
+                candidate.repr_party,
+        );
+
+    return party;
+});
 </script>
 
 <template>
@@ -34,9 +46,7 @@ defineProps<{
         >
             <div>
                 <h1 class="league-spartan text-4xl font-black text-[#081c55]">
-                    Din stemmeseddel FV{{
-                        new Date().getFullYear().toString().substring(2)
-                    }}
+                    Din stemmeseddel {{ election.name }}
                 </h1>
                 <span class="text-lg font-semibold text-[#304ea7]">
                     {{ user.district.name }}
@@ -55,13 +65,22 @@ defineProps<{
                         <div class="flex w-full flex-row items-center gap-2">
                             <Checkbox
                                 class="relative rounded-[2px] data-[state=checked]:border-red-700"
-                                :model-value="choosenParty?.id == party.id"
+                                :model-value="
+                                    choosenCandidate &&
+                                    party?.id == choosenCandidate?.party_id &&
+                                    choosenCandidate?.repr_party
+                                "
                                 @update:model-value="
                                     (state) => {
-                                        choosenParty = state
-                                            ? party
-                                            : undefined;
-                                        choosenCandidate = undefined;
+                                        if (state) {
+                                            choosenCandidate =
+                                                party.candidates.find(
+                                                    (candidate) =>
+                                                        candidate?.party_id ==
+                                                            party.id &&
+                                                        candidate.repr_party,
+                                                );
+                                        } else choosenCandidate = undefined;
                                     }
                                 "
                             >
@@ -82,7 +101,9 @@ defineProps<{
 
                         <div class="grid grid-cols-3 gap-4">
                             <div
-                                v-for="candidate in party.candidates"
+                                v-for="candidate in party.candidates.filter(
+                                    (candidate) => !candidate.repr_party,
+                                )"
                                 :key="candidate.id"
                                 class="flex flex-row items-center gap-2"
                             >
@@ -96,7 +117,6 @@ defineProps<{
                                             choosenCandidate = state
                                                 ? candidate
                                                 : undefined;
-                                            choosenParty = undefined;
                                         }
                                     "
                                 >

@@ -29,6 +29,10 @@ class PartySeeder extends Seeder
 
         $party->candidates()->createMany([
             [
+                'name' => 'Socialdemokratiet',
+                'repr_party' => true,
+            ],
+            [
                 'name' => 'Malte Larsen',
                 'district_id' => $ostjyllandId,
             ],
@@ -86,6 +90,10 @@ class PartySeeder extends Seeder
 
         $party->candidates()->createMany([
             [
+                'name' => 'Radikale Venstre',
+                'repr_party' => true,
+            ],
+            [
                 'name' => 'Line Rasmussen',
                 'district_id' => $ostjyllandId,
             ],
@@ -133,6 +141,10 @@ class PartySeeder extends Seeder
         ]);
 
         $party->candidates()->createMany([
+            [
+                'name' => 'Det Konservative Folkeparti',
+                'repr_party' => true,
+            ],
             [
                 'name' => 'Bia Ndamukunda',
                 'district_id' => $ostjyllandId,
@@ -192,6 +204,10 @@ class PartySeeder extends Seeder
 
         $party->candidates()->createMany([
             [
+                'name' => 'Socialistisk Folkeparti',
+                'repr_party' => true,
+            ],
+            [
                 'name' => 'Kirsten Normann Andersen',
                 'district_id' => $ostjyllandId,
             ],
@@ -245,6 +261,10 @@ class PartySeeder extends Seeder
 
         $party->candidates()->createMany([
             [
+                'name' => 'Borgernes Parti',
+                'repr_party' => true,
+            ],
+            [
                 'name' => 'Lars Boje Mathiesen',
                 'district_id' => $ostjyllandId,
             ],
@@ -268,6 +288,10 @@ class PartySeeder extends Seeder
         ]);
 
         $party->candidates()->createMany([
+            [
+                'name' => 'Liberal Alliance',
+                'repr_party' => true,
+            ],
             [
                 'name' => 'Jens Meilvang',
                 'district_id' => $ostjyllandId,
@@ -321,6 +345,10 @@ class PartySeeder extends Seeder
 
         $party->candidates()->createMany([
             [
+                'name' => 'Moderaterne',
+                'repr_party' => true,
+            ],
+            [
                 'name' => 'Christina Egelund',
                 'district_id' => $ostjyllandId,
             ],
@@ -361,6 +389,10 @@ class PartySeeder extends Seeder
 
         $party->candidates()->createMany([
             [
+                'name' => 'Dansk Folkeparti',
+                'repr_party' => true,
+            ],
+            [
                 'name' => 'Nick Zimmermann',
                 'district_id' => $ostjyllandId,
             ],
@@ -392,6 +424,10 @@ class PartySeeder extends Seeder
         ]);
 
         $party->candidates()->createMany([
+            [
+                'name' => 'Venstre',
+                'repr_party' => true,
+            ],
             [
                 'name' => 'Troels Lund Poulsen',
                 'district_id' => $ostjyllandId,
@@ -449,6 +485,10 @@ class PartySeeder extends Seeder
 
         $party->candidates()->createMany([
             [
+                'name' => 'Danmarksdemokraterne',
+                'repr_party' => true,
+            ],
+            [
                 'name' => 'Magnus Bigum',
                 'district_id' => $ostjyllandId,
             ],
@@ -480,6 +520,10 @@ class PartySeeder extends Seeder
         ]);
 
         $party->candidates()->createMany([
+            [
+                'name' => 'Enhedslisten',
+                'repr_party' => true,
+            ],
             [
                 'name' => 'Marin Laursen',
                 'district_id' => $ostjyllandId,
@@ -532,6 +576,10 @@ class PartySeeder extends Seeder
         ]);
 
         $party->candidates()->createMany([
+            [
+                'name' => 'Alternativet',
+                'repr_party' => true,
+            ],
             [
                 'name' => 'Torsten Gejl',
                 'district_id' => $ostjyllandId,
