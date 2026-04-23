@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { Head, usePage } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import { CircleChevronRightIcon, XIcon } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { vote } from '@/actions/App/Http/Controllers/DashboardController';
 import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -19,10 +20,19 @@ const user = usePage().props.auth.user;
 
 const choosenCandidate = ref<Candidate>();
 
-defineProps<{
+const props = defineProps<{
     election: Election | undefined;
     parties: Party[];
 }>();
+
+const form = useForm({
+    candidate_id: undefined as number | undefined,
+    election_id: props.election?.id,
+});
+
+watch(choosenCandidate, (newVal) => {
+    form.candidate_id = newVal?.id;
+});
 </script>
 
 <template>
@@ -142,6 +152,11 @@ defineProps<{
             <button
                 class="fixed right-5 bottom-5 inline-flex cursor-pointer items-center justify-center gap-3 rounded-md bg-green-400 px-4 py-2 transition-all hover:mr-1 hover:mb-1 hover:bg-green-400/80 hover:shadow-2xl"
                 v-if="choosenCandidate"
+                @click="
+                    () => {
+                        form.post(vote().url);
+                    }
+                "
             >
                 Aflever stemmeseddel
 

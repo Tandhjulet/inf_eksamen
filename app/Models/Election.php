@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Election extends Model
 {
+    protected $casts = [
+        'active' => 'bool'
+    ];
+
 
     public function votes()
     {
