@@ -46,7 +46,7 @@ watch(choosenCandidate, (newVal) => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <template v-if="election">
             <div
-                class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
+                class="flex h-full flex-1 flex-col gap-4 overflow-x-auto bg-white p-6"
             >
                 <div>
                     <h1
@@ -170,7 +170,7 @@ watch(choosenCandidate, (newVal) => {
         </template>
         <template v-else>
             <div
-                class="flex h-full w-full flex-col items-center justify-center bg-white"
+                class="flex h-full w-full grow flex-col items-center justify-center bg-white p-6"
             >
                 <h1 class="league-spartan text-4xl font-black text-[#081c55]">
                     Din stemme er registreret

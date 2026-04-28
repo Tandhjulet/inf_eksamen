@@ -21,7 +21,7 @@ withDefaults(defineProps<Props>(), {
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>
     <div
-        class="flex h-screen flex-col bg-[#FDFDFC] text-[#1b1b18] dark:bg-[#0a0a0a]"
+        class="flex min-h-screen flex-col bg-[#FDFDFC] text-[#1b1b18] dark:bg-[#0a0a0a]"
     >
         <header class="w-full text-sm">
             <nav
@@ -44,7 +44,7 @@ withDefaults(defineProps<Props>(), {
                 <Breadcrumbs :breadcrumbs="breadcrumbs" />
             </div>
         </nav>
-        <main class="h-full w-full bg-[#e7e7e7] p-8">
+        <main class="h-full w-full grow bg-[#e7e7e7] p-6">
             <slot />
         </main>
     </div>
