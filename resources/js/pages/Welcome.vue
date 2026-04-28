@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import { LockOpenIcon } from 'lucide-vue-next';
-import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import FAQCardVue from '@/components/FAQCard.vue';
-import Vote from '@/components/Vote.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard, home } from '@/routes';
+import type { BreadcrumbItem } from '@/types';
 import type { IFAQCard } from '@/types/ui';
 
 withDefaults(
@@ -34,83 +34,64 @@ const cards: IFAQCard[] = [
         picture: '/images/rights.png',
     },
 ];
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'stem.dk',
+        href: home(),
+    },
+    {
+        title: 'Forside',
+        href: home(),
+    },
+];
 </script>
 
 <template>
-    <Head title="Welcome">
-        <link rel="preconnect" href="https://rsms.me/" />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-    </Head>
-    <div
-        class="flex min-h-screen flex-col bg-[#FDFDFC] text-[#1b1b18] dark:bg-[#0a0a0a]"
-    >
-        <header class="mb-6 w-full text-sm">
-            <nav
-                class="flex items-center justify-between gap-4 bg-[#081c55] px-8 py-4"
-            >
-                <Link :href="home()">
-                    <AppLogoIcon class-name="text-white" />
-                </Link>
+    <AppLayout :breadcrumbs="breadcrumbs">
+        <div class="w-full bg-white pt-4">
+            <div class="flex w-full bg-[#081c55] pl-8">
+                <div class="pt-4 pb-4">
+                    <h1 class="league-spartan text-3xl font-bold text-white">
+                        Valgafstemningen er åben
+                    </h1>
+                    <p class="text-white">
+                        Du kan afgive din stemme til Folketingsvalget 2026
+                        online ved at logge ind med MitID. Afstemningen lukker
+                        den 24. marts.
+                    </p>
 
-                <div>
-                    <Vote />
-                </div>
-            </nav>
-            <div class="bg-[#2a649b] py-1"></div>
-        </header>
-        <main class="mt-6 w-full bg-[#e7e7e7] p-8">
-            <div class="w-full bg-white pt-4">
-                <div class="flex w-full bg-[#081c55] pl-8">
-                    <div class="pt-4 pb-4">
-                        <h1
-                            class="league-spartan text-3xl font-bold text-white"
+                    <div class="my-4">
+                        <Link
+                            :href="dashboard()"
+                            class="inline-flex items-center gap-3 bg-white px-4 py-2 font-bold text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
                         >
-                            Valgafstemningen er åben
-                        </h1>
-                        <p class="text-white">
-                            Du kan afgive din stemme til Folketingsvalget 2026
-                            online ved at logge ind med MitID. Afstemningen
-                            lukker den 24. marts.
-                        </p>
-
-                        <div class="my-4">
-                            <Link
-                                :href="dashboard()"
-                                class="inline-flex items-center gap-3 bg-white px-4 py-2 font-bold text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
-                            >
-                                <LockOpenIcon class="size-4" />
-                                <div
-                                    class="h-6 w-px shrink-0 grow bg-gray-400"
-                                ></div>
-                                Stem nu
-                            </Link>
-                        </div>
-
-                        <span
-                            class="league-spartan text-xl font-bold text-white"
-                        >
-                            Har du spørgsmål?
-                        </span>
-
-                        <p class="text-white">
-                            Få hjælp til at stemme på vores <u>hjemmeside</u>
-                        </p>
+                            <LockOpenIcon class="size-4" />
+                            <div
+                                class="h-6 w-px shrink-0 grow bg-gray-400"
+                            ></div>
+                            Stem nu
+                        </Link>
                     </div>
 
-                    <div class="w-1/2 grow bg-white">
-                        <img src="/images/laptop.png" />
-                    </div>
+                    <span class="league-spartan text-xl font-bold text-white">
+                        Har du spørgsmål?
+                    </span>
+
+                    <p class="text-white">
+                        Få hjælp til at stemme på vores <u>hjemmeside</u>
+                    </p>
+                </div>
+
+                <div class="w-1/2 grow bg-white">
+                    <img src="/images/laptop.png" />
                 </div>
             </div>
-            <div class="mt-4 bg-white p-4">
-                <div class="grid grid-cols-4 gap-4">
-                    <FAQCardVue
-                        v-for="(card, i) in cards"
-                        v-bind="card"
-                        :key="i"
-                    />
-                </div>
+        </div>
+        <div class="mt-4 bg-white p-4">
+            <div class="grid grid-cols-4 gap-4">
+                <FAQCardVue v-for="(card, i) in cards" v-bind="card" :key="i" />
             </div>
-        </main>
-    </div>
+        </div>
+    </AppLayout>
 </template>

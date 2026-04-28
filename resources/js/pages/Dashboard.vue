@@ -1,17 +1,22 @@
 <script setup lang="ts">
-import { Head, useForm, usePage } from '@inertiajs/vue3';
-import { CircleChevronRightIcon, XIcon } from 'lucide-vue-next';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import { CircleChevronRightIcon, LockOpenIcon, XIcon } from 'lucide-vue-next';
 import { ref, watch } from 'vue';
 import { vote } from '@/actions/App/Http/Controllers/DashboardController';
 import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { dashboard } from '@/routes';
+import { dashboard, home, logout } from '@/routes';
 import type { BreadcrumbItem, Candidate, Election, Party } from '@/types';
+import TextLink from '@/components/TextLink.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
+        title: 'stem.dk',
+        href: home(),
+    },
+    {
+        title: 'Stemmeseddel',
         href: dashboard(),
     },
 ];
@@ -164,8 +169,28 @@ watch(choosenCandidate, (newVal) => {
             </button>
         </template>
         <template v-else>
-            <div class="flex h-full w-full items-center justify-center">
-                <span>Der er ingen aktive valg lige nu.</span>
+            <div
+                class="flex h-full w-full flex-col items-center justify-center bg-white"
+            >
+                <h1 class="league-spartan text-4xl font-black text-[#081c55]">
+                    Din stemme er registreret
+                </h1>
+                <p>
+                    Dine stemme(r) er allerede blevet afgivet og registreret i
+                    systemet.
+                </p>
+                <p>Tak fordi du deltager i valget.</p>
+
+                <Link
+                    :href="logout()"
+                    class="my-6 inline-flex items-center gap-3 bg-[#081c55] px-4 py-2 font-bold text-white"
+                >
+                    <LockOpenIcon class="size-4 text-white" />
+                    <div class="h-6 w-px shrink-0 grow bg-gray-400"></div>
+                    Log ud
+                </Link>
+
+                <TextLink :href="home()"> Gå til forsiden </TextLink>
             </div>
         </template>
     </AppLayout>
