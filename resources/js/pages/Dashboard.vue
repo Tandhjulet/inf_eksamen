@@ -155,7 +155,7 @@ watch(choosenCandidate, (newVal) => {
             </div>
 
             <button
-                class="fixed right-5 bottom-5 inline-flex cursor-pointer items-center justify-center gap-3 rounded-md bg-green-400 px-4 py-2 transition-all hover:mr-1 hover:mb-1 hover:bg-green-400/80 hover:shadow-2xl"
+                class="fixed right-10 bottom-5 inline-flex cursor-pointer items-center justify-center gap-3 rounded-md bg-green-400 px-4 py-2 transition-all hover:mr-1 hover:mb-1 hover:bg-green-400/80 hover:shadow-2xl"
                 v-if="choosenCandidate"
                 @click="
                     () => {
@@ -163,7 +163,7 @@ watch(choosenCandidate, (newVal) => {
                     }
                 "
             >
-                Aflever stemmeseddel
+                Aflevér stemmeseddel
 
                 <CircleChevronRightIcon class="size-5" />
             </button>
@@ -176,7 +176,7 @@ watch(choosenCandidate, (newVal) => {
                     Din stemme er registreret
                 </h1>
                 <p>
-                    Dine stemme(r) er allerede blevet afgivet og registreret i
+                    Din stemme er allerede blevet afgivet og registreret i
                     systemet.
                 </p>
                 <p>Tak fordi du deltager i valget.</p>
