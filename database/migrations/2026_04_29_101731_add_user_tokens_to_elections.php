@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Candidate;
 use App\Models\Election;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -13,11 +12,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('candidate_election', function (Blueprint $table) {
+        Schema::create('election_user', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(User::class);
             $table->foreignIdFor(Election::class);
-            $table->foreignIdFor(Candidate::class);
-            $table->uuid('token');
+            $table->uuid('token')->default(DB::raw('(UUID())'))->nullable();
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('candidate_election');
+        Schema::dropIfExists('election_user');
     }
 };

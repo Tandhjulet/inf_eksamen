@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(District::class);
     }
+
+    public function elections()
+    {
+        return $this->belongsToMany(Election::class);
+    }
 }

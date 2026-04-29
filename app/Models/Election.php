@@ -19,7 +19,6 @@ class Election extends Model
 
     public function voters()
     {
-        return $this->belongsToMany(User::class, 'candidate_election_user')
-            ->withPivot(['user_id']);
+        return $this->belongsToMany(User::class)->withPivot(['token']);
     }
 }

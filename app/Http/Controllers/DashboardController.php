@@ -15,12 +15,27 @@ class DashboardController extends Controller
 {
     public function index(Request $req)
     {
-        $election = Election::where('active', true)->whereDoesntHave('voters', function ($q) {
+        $currentlyVotingOn = Election::where('active', true)->whereHas('voters', function ($q) {
             $q->where('user_id', Auth::id());
+            $q->whereNotNull('token');
         })->first();
 
+        if (!$currentlyVotingOn) {
+            $election = Election::where('active', true)->whereDoesntHave('voters', function ($q) {
+                $q->where('user_id', Auth::id());
+            })->first();
+
+            if ($election)
+                $election->voters()->attach(Auth::id());
+
+            return Inertia::render('Dashboard', [
+                'election' => $election,
+                'parties' => Party::with('candidates')->get(),
+            ]);
+        }
+
         return Inertia::render('Dashboard', [
-            'election' => $election,
+            'election' => $currentlyVotingOn,
             'parties' => Party::with('candidates')->get(),
         ]);
     }
@@ -35,19 +50,29 @@ class DashboardController extends Controller
         $electionId = $validated['election_id'];
         $election = Election::where('id', $electionId)
             ->where('active', true)
-            ->whereDoesntHave('voters', function ($q) {
-                $q->where('user_id', Auth::id());
-            })
             ->sole();
 
-        if ($election == null)
-            return;
+        if (!$election)
+            return redirect()->back();
+
+        $voter = $election->voters()
+            ->where('user_id', Auth::id())
+            ->first();
+
+        $token = $voter?->pivot?->token;
+
+        if (!$token)
+            return redirect()->back();
 
         $candidate = Candidate::where('id', $validated['candidate_id'])->sole();
-        DB::table('candidate_election_user')->insert([
+        DB::table('candidate_election')->insert([
             'candidate_id' => $candidate->id,
-            'user_id' => auth()->id(),
+            'token' => $token,
             'election_id' => $election->id,
+        ]);
+
+        $election->voters()->updateExistingPivot($election->id, [
+            'token' => null,
         ]);
 
         return to_route('dashboard');
